@@ -1,11 +1,22 @@
-import { Logger, File } from './utils/index.js';
-import { quickSort } from './functions/sort.js';
+import { Logger, Factory } from './src/utils/index.js';
+import { binarySearch } from './src/algorithms/search.js';
 
-const list = await File.readJSON('./data/list.json');
+const ARRAY_LENGTH = 1000000;
+
+const run = (search, array) => {
+  Logger.info(search.name);
+
+  const startTime = performance.now();
+  const result = search(array, 555);
+  const endTime = performance.now();
+
+  Logger.success(result, 555);
+  Logger.info(`${endTime - startTime}ms`);
+  console.log();
+};
 
 try {
-  const sorted = quickSort(list);
-  Logger.success(sorted);
+  run(binarySearch, Factory.getSortedArray(ARRAY_LENGTH));
 } catch (e) {
-  Logger.error(e.message);
+  Logger.error(e);
 }
